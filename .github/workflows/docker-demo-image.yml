@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       # - name: Login to GitHub Container Registry
@@ -18,7 +20,7 @@ jobs:
       #   with:
       #     registry: ghcr.io
       #     username: ${{ github.actor }}
-      #     password: ${{ secrets.ci-create-and-push-docker-images }}
+      #     password: ${{ secrets.CI_SECRETS }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -26,6 +28,6 @@ jobs:
           file: ./demo/Dockerfile
           push: true
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.ci-create-and-push-docker-images }}
+            GIT_AUTH_TOKEN=${{ secrets.CI_SECRETS }}
           tags: |
             ghcr.io/daixtrose/demo:latest
