@@ -30,4 +30,4 @@ jobs:
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           tags: |
-            ghcr.io/daixtrose/cs-pi-image:latest
+            ghcr.io/${{ github.actor }}/cs-pi-image:latest
