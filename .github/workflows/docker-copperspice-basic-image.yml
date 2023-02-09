@@ -1,4 +1,4 @@
-name: "Build Docker demo image"
+name: "Build Copperspice basic image"
 
 on:
   push:
