@@ -1,10 +1,10 @@
 name: "Build Copperspice Full Installation Docker"
 
 on:
-  # push:
-  #   branches: [main]
-  # pull_request:
-  #   branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -25,8 +25,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=ghcr.io/daixtrose/cs-pi-image:latest \
-            --allow=security.insecure
+            BASE_IMAGE=ghcr.io/daixtrose/cs-pi-image:latest --allow=security.insecure
           context: .
           file: ./copperspice/Dockerfile.full_install
           push: true
