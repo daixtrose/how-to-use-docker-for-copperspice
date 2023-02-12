@@ -25,8 +25,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=ghcr.io/daixtrose/cs-pi-image:latest
-          options: allow=security.insecure
+            BASE_IMAGE=ghcr.io/daixtrose/cs-pi-image:latest |
+            --allow=security.insecure
           context: .
           file: ./copperspice/Dockerfile.full_install
           push: true
