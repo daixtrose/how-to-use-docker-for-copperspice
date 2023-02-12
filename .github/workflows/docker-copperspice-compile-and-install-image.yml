@@ -26,8 +26,6 @@ jobs:
         with:
           build-args: |
             BASE_IMAGE=ghcr.io/daixtrose/cs-pi-image:latest 
-          allow: |
-            security.insecure
           context: .
           file: ./copperspice/Dockerfile.full_install
           push: true
