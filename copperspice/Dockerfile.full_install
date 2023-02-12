@@ -1,6 +1,12 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
+# make sure the things that have to run in the emulator are 
+RUN update-binfmts --enable
+
+# check if everything is set up correctly 
+RUN hello 
+
 # clone CopperSpice
 RUN git clone https://github.com/copperspice/copperspice.git cs_pi_source 
 
