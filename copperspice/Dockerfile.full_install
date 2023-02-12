@@ -5,7 +5,7 @@ FROM $BASE_IMAGE
 RUN update-binfmts --enable
 
 # check if everything is set up correctly 
-RUN hello 
+RUN /usr/bin/hello 
 
 # clone CopperSpice
 RUN git clone https://github.com/copperspice/copperspice.git cs_pi_source 
