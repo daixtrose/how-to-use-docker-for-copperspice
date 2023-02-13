@@ -1,8 +1,11 @@
+# syntax=docker/dockerfile:1.3-labs
+
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
 # make sure the things that have to run in the emulator are 
-RUN --security=insecure update-binfmts --enable
+# RUN --security=insecure update-binfmts --enable
+RUN update-binfmts --enable
 
 # check if everything is set up correctly 
 RUN /usr/bin/hello 
