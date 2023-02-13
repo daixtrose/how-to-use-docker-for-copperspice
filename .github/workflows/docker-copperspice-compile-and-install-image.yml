@@ -21,6 +21,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare binftms 
+        run: |
+          sudo apt-get install -y \
+          qemu \
+          binfmt-support \
+          qemu-user-static 
+      - name: Add armhf architecture to multiarch configuration
+        run: |
+          sudo dpkg --add-architecture armhf 
+          sudo update-binfmts --enable         
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
