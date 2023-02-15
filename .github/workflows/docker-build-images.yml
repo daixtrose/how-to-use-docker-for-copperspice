@@ -71,6 +71,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       -
+        name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: debian-base-11-git-2.30.2
+          path: /tmp/debian-base-11-git-2.30.2.tar
+      -
+        name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: debian-base-11-git-2.30.2
+          path: /tmp
+      -
         name: Load Git image
         run: |
           docker load --input /tmp/debian-base-11-git-2.30.2.tar
