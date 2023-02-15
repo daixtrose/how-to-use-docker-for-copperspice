@@ -61,7 +61,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=debian-base-11:latest \
+            BASE_IMAGE=debian-base-11:latest
             VERSION=2.30.2
           file: ./git/Dockerfile 
           tags: debian-base-11-git-2.30.2:latest
@@ -76,7 +76,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=debian-base-11-git-2.30.2:latest \
+            BASE_IMAGE=debian-base-11-git-2.30.2:latest
             VERSION=3.25.2
           file: ./cmake/Dockerfile 
           tags: debian-base-11-git-2.30.2-cmake-3.25.2:latest
