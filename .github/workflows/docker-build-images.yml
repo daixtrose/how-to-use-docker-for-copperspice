@@ -51,6 +51,8 @@ jobs:
           file: ./debian/Dockerfile 
           tags: debian-base-11:latest
           outputs: type=docker,dest=/tmp/debian-base-11.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       -
         name: Load Debian image
         run: |
@@ -66,6 +68,8 @@ jobs:
           file: ./git/Dockerfile 
           tags: debian-base-11-git-2.30.2:latest
           outputs: type=docker,dest=/tmp/debian-base-11-git-2.30.2.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       -
         name: Load Git image
         run: |
@@ -81,6 +85,8 @@ jobs:
           file: ./cmake/Dockerfile 
           tags: debian-base-11-git-2.30.2-cmake-3.25.2:latest
           outputs: type=docker,dest=/tmp/debian-base-11-git-2.30.2-cmake-3.25.2.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       -
         name: Load CMake image
         run: |
@@ -99,3 +105,5 @@ jobs:
             GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           tags: |
             ghcr.io/${{ github.actor }}/cs-pi-full:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
