@@ -56,7 +56,7 @@ jobs:
       -
         name: Load Debian image
         run: |
-          docker load --input /tmp/debian-base-11.tar
+          docker import /tmp/debian-base-11.tar
           docker image ls -a
       -
         name: Add Git
