@@ -1,0 +1,26 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+# make sure the things that have to run in the emulator are 
+# RUN --security=insecure update-binfmts --enable
+RUN update-binfmts --enable
+
+# check if everything is set up correctly 
+RUN /usr/bin/hello 
+
+# clone CopperSpice
+RUN git clone https://github.com/copperspice/copperspice.git cs_pi_source 
+
+# build and install
+RUN mkdir cs_pi_build && cd cs_pi_build && \
+    cmake -GNinja \
+    -DCMAKE_CXX_FLAGS='-march=armv7' \
+    -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++-10 \
+    -DCMAKE_C_FLAGS='-march=armv7' \
+    -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc-10 \
+    -DPKG_CONFIG_EXECUTABLE='/usr/bin/arm-linux-gnueabihf-pkg-config' \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DWITH_WEBKIT=NO \
+    -DCMAKE_INSTALL_PREFIX=/opt/copperspice/latest \
+    ../cs_pi_source && \
+    ninja install
