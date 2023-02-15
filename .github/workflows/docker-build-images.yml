@@ -42,6 +42,14 @@ jobs:
           sudo dpkg --add-architecture aarch64 
           sudo update-binfmts --enable         
       - 
+        name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-single-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-single-buildx
+      - 
         name: Build Debian base image
         uses: docker/build-push-action@v4
         with:
@@ -51,8 +59,16 @@ jobs:
           file: ./debian/Dockerfile 
           tags: debian-base-11:latest
           outputs: type=docker,dest=/tmp/debian-base-11.tar
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new      
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - 
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       -
         name: Load Debian image
         run: |
@@ -63,25 +79,25 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=debian-base-11:latest
+            BASE_IMAGE=/tmp/debian-base-11.tar
             VERSION=2.30.2
           file: ./git/Dockerfile 
           tags: debian-base-11-git-2.30.2:latest
           outputs: type=docker,dest=/tmp/debian-base-11-git-2.30.2.tar
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      -
-        name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: debian-base-11-git-2.30.2
-          path: /tmp/debian-base-11-git-2.30.2.tar
-      -
-        name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: debian-base-11-git-2.30.2
-          path: /tmp
+      # -
+      #   name: Upload artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: debian-base-11-git-2.30.2
+      #     path: /tmp/debian-base-11-git-2.30.2.tar
+      # -
+      #   name: Download artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: debian-base-11-git-2.30.2
+      #     path: /tmp
       -
         name: Load Git image
         run: |
