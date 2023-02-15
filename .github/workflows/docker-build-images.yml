@@ -72,8 +72,8 @@ jobs:
       -
         name: Load Debian image
         run: |
-          docker import /tmp/debian-base-11.tar
-          docker image ls -a
+          docker load --input /tmp/debian-base-11.tar
+          docker images -a
       -
         name: Add Git
         uses: docker/build-push-action@v4
