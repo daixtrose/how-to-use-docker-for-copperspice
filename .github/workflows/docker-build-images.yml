@@ -51,7 +51,7 @@ jobs:
         name: Build Debian base image
         uses: docker/build-push-action@v4
         with:
-          context: base
+          context: .
           load: true
           build-args: |
             VERSION=11
