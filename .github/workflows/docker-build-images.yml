@@ -10,6 +10,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
     steps:
       - 
         name: Checkout
@@ -52,25 +57,27 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          load: true
+          # load: true
           build-args: |
             VERSION=11
-          file: ./debian/Dockerfile 
+          file: 
+            ./debian/Dockerfile 
           tags: 
-            debian-base-11:latest
+            localhost:5000/${{ github.actor }}/debian-base-11:latest
       -
         name: Add Git
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=local_debian
+            BASE_IMAGE=localhost:5000/${{ github.actor }}/debian-base-11:latest
             VERSION=2.30.2
           file: ./git/Dockerfile 
           context: .
-          build-contexts: |
-            local_debian=docker-image://debian-base-11:latest
-          tags: debian-base-11-git-2.30.2:latest
-          load: true
+          # build-contexts: |
+          #   local_debian=docker-image://debian-base-11:latest
+          tags: 
+            localhost:5000/${{ github.actor }}/debian-base-11-git-2.30.2:latest
+          #load: true
       # -
       #   name: Upload artifact
       #   uses: actions/upload-artifact@v3
