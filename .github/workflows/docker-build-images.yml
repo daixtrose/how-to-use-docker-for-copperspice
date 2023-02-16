@@ -55,20 +55,21 @@ jobs:
             VERSION=11
           context: .
           file: ./debian/Dockerfile 
-          tags: debian-base-11:latest
+          tags: 
+            local-debian-base-11:latest
           outputs: type=docker,dest=/tmp/debian-base-11.tar
       -
         name: Load Debian image
         run: |
           docker load --input /tmp/debian-base-11.tar
           docker images -a
-          docker inspect --format='{{.Os}}/{{.Architecture}}' debian-base-11:latest
+          docker inspect --format='{{.Os}}/{{.Architecture}}' local-debian-base-11:latest
       -
         name: Add Git
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=./debian-base-11:latest
+            BASE_IMAGE=local-debian-base-11:latest
             VERSION=2.30.2
           file: ./git/Dockerfile 
           tags: debian-base-11-git-2.30.2:latest
