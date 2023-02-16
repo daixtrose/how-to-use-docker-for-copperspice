@@ -1,5 +1,6 @@
 ARG BASE_IMAGE
-FROM $BASE_IMAGE
+# FROM $BASE_IMAGE
+FROM local_debian
 
 LABEL maintainer="Markus Werle <daixtrose@users.noreply.github.com>"
 
