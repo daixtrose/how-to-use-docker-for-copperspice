@@ -62,6 +62,7 @@ jobs:
         run: |
           docker load --input /tmp/debian-base-11.tar
           docker images -a
+          docker inspect --format='{{.Os}}/{{.Architecture}}' debian-base-11:latest
       -
         name: Add Git
         uses: docker/build-push-action@v4
