@@ -63,12 +63,12 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           build-args: |
-            BASE_IMAGE=debian-base-11:latest
+            BASE_IMAGE=local_debian
             VERSION=2.30.2
           file: ./git/Dockerfile 
           context: .
           build-contexts: |
-            debian-base-11:latest=docker-image://debian-base-11:latest
+            local_debian=docker-image://debian-base-11:latest
           tags: debian-base-11-git-2.30.2:latest
           load: true
       # -
