@@ -51,20 +51,13 @@ jobs:
         name: Build Debian base image
         uses: docker/build-push-action@v4
         with:
+          context: base
+          load: true
           build-args: |
             VERSION=11
-          context: .
           file: ./debian/Dockerfile 
           tags: 
             debian-base-11:latest
-          outputs: type=docker,dest=/tmp/debian-base-11.tar
-          load: true
-      -
-        name: Load Debian image
-        run: |
-          docker load --input /tmp/debian-base-11.tar
-          docker images -a
-          docker inspect --format='{{.Os}}/{{.Architecture}}' debian-base-11:latest
       -
         name: Add Git
         uses: docker/build-push-action@v4
@@ -73,12 +66,11 @@ jobs:
             BASE_IMAGE=debian-base-11:latest
             VERSION=2.30.2
           file: ./git/Dockerfile 
+          context: .
+          build-contexts: |
+            alpine=docker-image://debian-base-11:latest
           tags: debian-base-11-git-2.30.2:latest
-          outputs: type=docker,dest=/tmp/debian-base-11-git-2.30.2.tar
           load: true
-          pull: false
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
       # -
       #   name: Upload artifact
       #   uses: actions/upload-artifact@v3
