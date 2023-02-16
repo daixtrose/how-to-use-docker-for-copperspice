@@ -74,6 +74,7 @@ jobs:
           file: ./git/Dockerfile 
           tags: debian-base-11-git-2.30.2:latest
           outputs: type=docker,dest=/tmp/debian-base-11-git-2.30.2.tar
+          load: true
           pull: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
