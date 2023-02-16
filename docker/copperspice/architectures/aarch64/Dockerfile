@@ -1,6 +1,15 @@
-# syntax=docker/dockerfile:1.3-labs
+ARG VERSION
 
-FROM debian:11
+FROM debian:$VERSION
+
+LABEL maintainer="Markus Werle <daixtrose@users.noreply.github.com>"
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+    git=$VERSION \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 
 # Fetch updated package list
 RUN apt-get update && apt-get install -y
@@ -64,8 +73,8 @@ RUN apt-get install -y \
   binfmt-support \
   qemu-user-static 
 
-# Add "armhf" architecture to Debian multiarch configuration
-RUN dpkg --add-architecture armhf
+# Add "aarch64" architecture to Debian multiarch configuration
+RUN dpkg --add-architecture aarch64
 RUN apt-get update
 
 # Install cross compiler
@@ -75,40 +84,40 @@ RUN apt-get install -y \
 
 # Install target CS build dependencies
 RUN apt-get install -y \
-  libatomic1:armhf \
-  libice-dev:armhf \
-  libsm-dev:armhf \
-  libx11-dev:armhf \
-  libx11-xcb-dev:armhf \
-  libxcursor-dev:armhf \
-  libxext-dev:armhf \
-  libxfixes-dev:armhf \
-  libxi-dev:armhf \
-  libxinerama-dev:armhf \
-  libxkbcommon-dev:armhf \
-  libxkbcommon-x11-dev:armhf \
-  libxml2-dev:armhf \
-  libxrandr-dev:armhf \
-  libxrender-dev:armhf \
-  libxcb-icccm4-dev:armhf \
-  libxcb-image0-dev:armhf \
-  libxcb-keysyms1-dev:armhf \
-  libxcb-randr0-dev:armhf \
-  libxcb-render-util0-dev:armhf \
-  libxcb-render0-dev:armhf \
-  libxcb-shape0-dev:armhf \
-  libxcb-shm0-dev:armhf \
-  libxcb-sync-dev:armhf \
-  libxcb-xfixes0-dev:armhf \
-  libxcb-xinerama0-dev:armhf \
-  libxcb-xkb-dev:armhf \
-  libgl1-mesa-dev:armhf \
-  libfontconfig1-dev:armhf \
-  libxcb-glx0-dev:armhf \
-  libgstreamer-plugins-base1.0-dev:armhf \
-  libgstreamer1.0-dev:armhf \
-  libaudio-dev:armhf \
-  libpulse-dev:armhf
+  libatomic1:aarch64 \
+  libice-dev:aarch64 \
+  libsm-dev:aarch64 \
+  libx11-dev:aarch64 \
+  libx11-xcb-dev:aarch64 \
+  libxcursor-dev:aarch64 \
+  libxext-dev:aarch64 \
+  libxfixes-dev:aarch64 \
+  libxi-dev:aarch64 \
+  libxinerama-dev:aarch64 \
+  libxkbcommon-dev:aarch64 \
+  libxkbcommon-x11-dev:aarch64 \
+  libxml2-dev:aarch64 \
+  libxrandr-dev:aarch64 \
+  libxrender-dev:aarch64 \
+  libxcb-icccm4-dev:aarch64 \
+  libxcb-image0-dev:aarch64 \
+  libxcb-keysyms1-dev:aarch64 \
+  libxcb-randr0-dev:aarch64 \
+  libxcb-render-util0-dev:aarch64 \
+  libxcb-render0-dev:aarch64 \
+  libxcb-shape0-dev:aarch64 \
+  libxcb-shm0-dev:aarch64 \
+  libxcb-sync-dev:aarch64 \
+  libxcb-xfixes0-dev:aarch64 \
+  libxcb-xinerama0-dev:aarch64 \
+  libxcb-xkb-dev:aarch64 \
+  libgl1-mesa-dev:aarch64 \
+  libfontconfig1-dev:aarch64 \
+  libxcb-glx0-dev:aarch64 \
+  libgstreamer-plugins-base1.0-dev:aarch64 \
+  libgstreamer1.0-dev:aarch64 \
+  libaudio-dev:aarch64 \
+  libpulse-dev:aarch64
 
 # Executable to verify ARM binary emulation is operating
-RUN apt-get install -y hello:armhf
+RUN apt-get install -y hello:aarch64

@@ -1,0 +1,3 @@
+[submodule "3rdparty/docker-devel-env"]
+	path = 3rdparty/docker-devel-env
+	url = https://github.com/BrainTwister/docker-devel-env
