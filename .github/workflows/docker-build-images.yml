@@ -68,7 +68,7 @@ jobs:
           file: ./git/Dockerfile 
           context: .
           build-contexts: |
-            alpine=docker-image://debian-base-11:latest
+            debian-base-11:latest=docker-image://debian-base-11:latest
           tags: debian-base-11-git-2.30.2:latest
           load: true
       # -
